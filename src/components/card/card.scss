@@ -1,0 +1,51 @@
+.cardContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin: 20px;
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+    height: 25%;
+    align-items: center;
+    margin-bottom: 30px;
+    position: relative;
+
+    img {
+      width: 300px;
+      height: 250px;
+    }
+
+    p {
+      margin-top: 10px;
+    }
+
+    .save {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      top: 10px;
+      right: 15px;
+      position: absolute;
+
+      button {
+        background-color: white;
+        border-radius: 50%;
+        width: 36px;
+        height: 36px;
+        cursor: pointer;
+        
+        &.saved {
+            background-color: yellow;
+        }
+
+        img {
+          width: 24px;
+          height: 24px;
+        }
+      }
+    }
+  }
+}

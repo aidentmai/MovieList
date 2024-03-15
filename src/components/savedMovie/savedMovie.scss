@@ -1,0 +1,18 @@
+.savedMovie {
+    .body {
+        padding-bottom: 5px;
+    
+        .content {
+          height: 700px;
+          border: 1px solid black;
+          overflow: scroll;
+
+          p {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+          }
+        }
+      }
+}

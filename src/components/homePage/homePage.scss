@@ -1,0 +1,11 @@
+.homePage {
+  .body {
+    padding-bottom: 5px;
+
+    .content {
+      height: 700px;
+      border: 1px solid black;
+      overflow: scroll;
+    }
+  }
+}
