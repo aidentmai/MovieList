@@ -1,26 +1,30 @@
-import "./savedMovie.scss";
-import { useState, useEffect } from "react";
+// SavedMovie.jsx
 import Card from "../card/Card";
+import "./savedMovie.scss";
 
 function SavedMovie({ savedMovies, setSavedMovies }) {
-  //   useEffect(() => {
-  //     const retrieveSavedMovies = () => {
-  //       const savedMovies = localStorage.getItem("savedMovies");
-  //       return savedMovies ? JSON.parse(savedMovies) : [];
-  //     };
+  const clearSavedMovies = () => {
+    localStorage.removeItem("savedMovies");
+    setSavedMovies([]);
+  };
 
-  //     setSavedMovies(retrieveSavedMovies());
-  //   }, []);
+  console.log(savedMovies);
 
   return (
     <div className="savedMovie">
       <div className="body">
         <div className="content">
-        {savedMovies && savedMovies.length > 0 ? (
-            <Card movieList={savedMovies} savedMovies={savedMovies} setSavedMovies={setSavedMovies} />
+          {savedMovies && savedMovies.length > 0 ? (
+            <Card
+              movieList={savedMovies} // Pass savedMovies as movieList
+              savedMovies={savedMovies}
+              setSavedMovies={setSavedMovies}
+              source="saved" // Indicate the source as "saved"
+            />
           ) : (
             <p>No saved movies</p>
           )}
+          <button onClick={clearSavedMovies}>Clear saved movies</button>
         </div>
       </div>
     </div>

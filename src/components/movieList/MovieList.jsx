@@ -26,11 +26,15 @@ function MovieList({ savedMovies, setSavedMovies }) {
     getMovie();
   }, []);
 
+  const removeFromMovieList = (movieId) => {
+    setMovieList(prevMovieList => prevMovieList.filter(movie => movie.id !== movieId));
+  };
+
   console.log(movieList);
 
   return (
     <div className="movieList">
-      <Card movieList={movieList} savedMovies={savedMovies} setSavedMovies={setSavedMovies} />
+      <Card movieList={movieList} savedMovies={savedMovies} setSavedMovies={setSavedMovies} removeFromMovieList={removeFromMovieList} />
     </div>
   );
 }

@@ -1,35 +1,25 @@
+// Card.jsx code
 import { useState, useEffect } from "react";
 import "./card.scss";
 
-function Card({ movieList, savedMovies, setSavedMovies }) {
+function Card({ movieList, savedMovies, setSavedMovies, source, removeFromMovieList }) {
   const [saved, setSaved] = useState(null);
-  
 
   const handleButtonClick = (movie) => {
-    setSaved(prevSaved => prevSaved === movie.id ? null : movie.id);
-  };
-
-//   useEffect(() => {
-//     const retrieveSavedMovies = () => {
-//       const savedMovies = localStorage.getItem("savedMovies");
-//       return savedMovies ? JSON.parse(savedMovies) : [];
-//     };
-
-//     setSavedMovies(retrieveSavedMovies());
-//   }, []);
-
-  useEffect(() => {
-    if (saved !== null) {
-      if (savedMovies.find(movie => movie.id === saved)) {
-        setSavedMovies(prev => prev.filter(movie => movie.id !== saved));
-      } else {
-        const movieToSave = movieList.find(movie => movie.id === saved);
-        if (movieToSave) {
-          setSavedMovies(prev => [...prev, movieToSave]);
-        }
-      }
+    const isSaved = savedMovies.find((savedMovie) => savedMovie.id === movie.id);
+    if (isSaved) {
+      // If the movie is already saved, remove it
+      const updatedSavedMovies = savedMovies.filter((savedMovie) => savedMovie.id !== movie.id);
+      setSavedMovies(updatedSavedMovies);
+    } else {
+      // If the movie is not saved, add it to savedMovies
+      setSavedMovies((prevSavedMovies) => [...prevSavedMovies, movie]);
     }
-  }, [saved]);
+    // Remove the movie from the movieList
+    removeFromMovieList(movie.id);
+    // Toggle the saved state of the movie
+    setSaved((prevSaved) => (prevSaved === movie.id ? null : movie.id));
+  };
 
   useEffect(() => {
     localStorage.setItem("savedMovies", JSON.stringify(savedMovies));
@@ -37,7 +27,7 @@ function Card({ movieList, savedMovies, setSavedMovies }) {
 
   return (
     <div className="cardContainer">
-      {movieList.filter(movie => !savedMovies.find(savedMovie => savedMovie.id === movie.id)).map((movie) => (
+      {(source === "saved" ? savedMovies : movieList).map((movie) => (
         <div className="card" key={movie.id}>
           <div className="save">
             <button
@@ -47,9 +37,9 @@ function Card({ movieList, savedMovies, setSavedMovies }) {
               className={`button ${saved === movie.id ? "saved" : ""}`}
             >
               {saved === movie.id ? (
-                <img src="/star.png" alt="" />
+                <img src="/trash.png" alt="Remove from saved" />
               ) : (
-                <img src="/trash.png" alt="" />
+                <img src="/star.png" alt="Add to saved" />
               )}
             </button>
           </div>

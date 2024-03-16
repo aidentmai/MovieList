@@ -2,19 +2,24 @@ import Header from "./components/header/Header";
 import HomePage from "./components/homePage/HomePage";
 import SavedMovie from "./components/savedMovie/SavedMovie";
 import "./layout.scss";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const types = ["Movies", "To Watch"];
 
+const savedMoviesFromLocalStorage = JSON.parse(localStorage.getItem("savedMovies")) || [];
 
 function App() {
-  const [currentTab, setCurrentTab] = useState("Movies");
-  const [savedMovies, setSavedMovies] = useState([]);
+  const [currentTab, setCurrentTab] = useState(localStorage.getItem('currentTab') || 'Movies');
+  const [savedMovies, setSavedMovies] = useState(savedMoviesFromLocalStorage);
 
-  const handleSaveMovie = (movie) => {
-    setSavedMovies(prev => [...prev, movie]);
-    setMovieList(prev => prev.filter(m => m.id !== movie.id));
-  };
+  useEffect(() => {
+    localStorage.setItem('currentTab', currentTab);
+  }, [currentTab]);
+
+  useEffect(() => {
+    localStorage.setItem('savedMovies', JSON.stringify(savedMovies));
+  }, [savedMovies]);
+
   return (
     <>
       <div className="layout">
