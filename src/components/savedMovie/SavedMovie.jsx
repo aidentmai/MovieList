@@ -2,12 +2,7 @@
 import Card from "../card/Card";
 import "./savedMovie.scss";
 
-function SavedMovie({ savedMovies, setSavedMovies }) {
-  const clearSavedMovies = () => {
-    localStorage.removeItem("savedMovies");
-    setSavedMovies([]);
-  };
-
+function SavedMovie({ savedMovies, setSavedMovies, setMovieList, currentTab }) {
   console.log(savedMovies);
 
   return (
@@ -20,11 +15,12 @@ function SavedMovie({ savedMovies, setSavedMovies }) {
               savedMovies={savedMovies}
               setSavedMovies={setSavedMovies}
               source="saved" // Indicate the source as "saved"
+              setMovieList={setMovieList}
+              currentTab={currentTab}
             />
           ) : (
             <p>No saved movies</p>
           )}
-          <button onClick={clearSavedMovies}>Clear saved movies</button>
         </div>
       </div>
     </div>

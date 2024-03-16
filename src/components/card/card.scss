@@ -4,7 +4,7 @@
   justify-content: space-around;
   margin: 20px;
 
-  .card {
+  .cardFront, .cardBack {
     display: flex;
     flex-direction: column;
     width: 25%;

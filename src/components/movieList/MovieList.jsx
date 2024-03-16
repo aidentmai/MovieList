@@ -1,15 +1,23 @@
+// MovieList.jsx
 import "./movieList.scss";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Card from "../card/Card";
 
+function MovieList({ savedMovies, setSavedMovies, movieList, setMovieList, currentTab, searchMovie, setSearchMovie}) {
+  
 
+  useEffect(() => {
+    if (!movieList.length) {
+      fetchMovieList();
+    }
+  }, []); // Fetch movie list only on component mount if movieList is not available
 
-function MovieList({ savedMovies, setSavedMovies }) {
-  const [movieList, setMovieList] = useState([]);
+  useEffect(() => {
+    localStorage.setItem("movieList", JSON.stringify(movieList));
+  }, [movieList]); // Update local storage whenever movieList changes
 
-  // Use AXIOS GET to grab data from TMDB database using their API key
-  const getMovie = () => {
+  const fetchMovieList = () => {
     axios
       .get(
         `https://api.themoviedb.org/3/discover/movie?api_key=${import.meta.env.VITE_API_KEY}`
@@ -22,19 +30,19 @@ function MovieList({ savedMovies, setSavedMovies }) {
       });
   };
 
-  useEffect(() => {
-    getMovie();
-  }, []);
-
-  const removeFromMovieList = (movieId) => {
-    setMovieList(prevMovieList => prevMovieList.filter(movie => movie.id !== movieId));
-  };
-
-  console.log(movieList);
+  
 
   return (
     <div className="movieList">
-      <Card movieList={movieList} savedMovies={savedMovies} setSavedMovies={setSavedMovies} removeFromMovieList={removeFromMovieList} />
+      <Card
+        movieList={movieList}
+        savedMovies={savedMovies}
+        setSavedMovies={setSavedMovies}
+        setMovieList={setMovieList}
+        currentTab={currentTab}
+        searchMovie={searchMovie}
+        setSearchMovie={setSearchMovie}
+      />
     </div>
   );
 }
